@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+runhouse
+ollama

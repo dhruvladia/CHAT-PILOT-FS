@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Interface</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat"></div>
+        <input type="text" id="message" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById('message').value;
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `message=${encodeURIComponent(message)}`
+            });
+            const data = await response.json();
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div>User: ${message}</div>`;
+            chat.innerHTML += `<div>Kyra: ${data.response}</div>`;
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
